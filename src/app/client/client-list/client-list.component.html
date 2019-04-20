@@ -1,0 +1,14 @@
+<table class="table">
+  <tr>
+    <th>Client ID</th>
+    <th>Name</th>
+    <th>Onboarding Complete</th>
+    <th>Attributes</th>
+  </tr>
+  <tr *ngFor="let client of clients">
+    <td>{{ client.id }}</td>
+    <td>{{ client.name }}</td>
+    <td>{{ client.onboardingComplete }}</td>
+    <td>{{ client.attributes | json }}</td>
+  </tr>
+</table>
