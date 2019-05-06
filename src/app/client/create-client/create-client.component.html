@@ -1,0 +1,42 @@
+<h2>Create Client</h2>
+
+<div class="form-group">
+  <form [formGroup]="clientForm" (ngSubmit)="submitClient(clientForm.value)">
+    <div *ngFor="let attribute of requiredAttributes">
+      <div>{{attribute.name}}</div>
+      <div class="{{attribute.id}}">
+        <input type="text"
+              [formControlName]="attribute.id"
+              [id]="attribute.id"
+              placeholder="{{attribute.name}}">
+      </div>
+    </div>
+
+    <div formArrayName="attributes">
+      <div *ngFor="let attribute of attributes.controls; let i = index"
+           [formGroupName]="i">
+        <div>{{attribute.value | json}}</div>
+        <div>{{index}}</div>
+
+        <select name="attributeType" formControlName="attributeId">
+          <option value=""></option>
+          <option *ngFor="let a of notRequiredAttributes"
+                  [ngValue]="a.id">{{a.name}}</option>
+        </select>
+        <div *ngIf="attribute.value.attributeId">
+          <input type="text"
+                 placeholder="{{attribute.value.attributeId}}"
+                 formControlName="value">
+        </div>
+        <button type="button" (click)="removeAttribute(i)">X</button>
+
+      </div>
+    </div>
+    <button type="button"
+            (click)="addAttributeForm()">
+      Add Attribute
+    </button>
+
+    <button type="submit">Submit</button>
+  </form>
+</div>

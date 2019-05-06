@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Client, Attribute } from '../model/client';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
 
-  url: string = 'http://localhost:8090/api/v1'
+  private url: string = 'http://localhost:8090/api/v1';
 
   public clients: Client[] = [];
 
@@ -15,5 +16,9 @@ export class ClientService {
 
   public getAllClients() {
     return this.http.get(`${this.url}/client`);
+  }
+
+  public createClient(values): Observable<any> {
+    return this.http.post(`${this.url}/client/new`, values);
   }
 }
