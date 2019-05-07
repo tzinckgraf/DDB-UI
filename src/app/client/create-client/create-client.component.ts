@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Attribute, Client } from '../../model/client';
+import { Client } from '../../model/client';
 import { stringify } from '@angular/core/src/render3/util';
 import { ClientAttributeService } from '../../service/client-attribute.service';
 import { ClientAttribute } from 'src/app/model/client-attribute';
@@ -14,7 +14,7 @@ import { ClientService } from 'src/app/service/client.service';
 })
 export class CreateClientComponent implements OnInit {
 
-  public attributeTypeMap: Map<string, Attribute>;
+  public attributeTypeMap: Map<string, ClientAttribute>;
   private clientForm: FormGroup;
 
   private requiredAttributes: ClientAttribute[];
@@ -23,7 +23,7 @@ export class CreateClientComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private clientAttributeService: ClientAttributeService,
               private clientService: ClientService) {
-    this.attributeTypeMap = new Map<string, Attribute>();
+    this.attributeTypeMap = new Map<string, ClientAttribute>();
     this.createForm();
     this.loadAttributeTypes();
   }

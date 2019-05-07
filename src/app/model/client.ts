@@ -1,17 +1,10 @@
-export class Client {
-  constructor(
-    public id: number,
-    public name: string,
-    public onboardingComplete: boolean,
-    public attributes: Attribute[] = []) {
-  }
+export interface Client {
+  id: string;
+  attributes: Attribute[];
 }
 
 
-export class Attribute {
-  constructor(
-    public attribName: string,
-    public attribType: string,
-    public attribValue: string
-  ) { }
+interface Attribute {
+  clientAttributeTypeId: string;
+  value: any;
 }

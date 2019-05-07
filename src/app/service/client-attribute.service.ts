@@ -8,11 +8,12 @@ import { ClientAttribute } from '../model/client-attribute';
 })
 export class ClientAttributeService {
 
-  private url: string = 'http://localhost:8090/api/v1';
+  // private url: string = 'http://localhost:8090/api/v1';
+  private url: string = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
 
   public getAllAttributes() {
-    return this.http.get(`${this.url}/clientAttributeType`);
+    return this.http.get(`${this.url}/clientAttributeTypes`);
   }
 }

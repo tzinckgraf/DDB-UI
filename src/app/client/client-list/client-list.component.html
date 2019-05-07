@@ -1,14 +1,27 @@
 <table class="table">
   <tr>
     <th>Client ID</th>
-    <th>Name</th>
-    <th>Onboarding Complete</th>
-    <th>Attributes</th>
+    <th *ngFor="let attribute of mainAttributes">{{ attribute.name }}</th>
+    <th>Extra</th>
   </tr>
   <tr *ngFor="let client of clients">
     <td>{{ client.id }}</td>
-    <td>{{ client.name }}</td>
-    <td>{{ client.onboardingComplete }}</td>
-    <td>{{ client.attributes | json }}</td>
+    <td *ngFor="let attribute of mainAttributes">
+      {{ client.mainAttributes.get(attribute.name) }}
+    </td>
+    <td>
+      <div>
+        <table class="table">
+          <tr>
+            <th *ngFor="let attribute of extraAttributes">{{ attribute.name }}</th>
+          </tr>
+          <tr>
+            <td *ngFor="let attribute of extraAttributes">
+              {{ client.extraAttributes.get(attribute.name) }}
+            </td>
+          </tr> 
+        </table>
+      </div>
+    </td>
   </tr>
 </table>
