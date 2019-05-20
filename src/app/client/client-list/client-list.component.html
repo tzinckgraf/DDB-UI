@@ -1,27 +1,33 @@
-<table class="table">
+<a routerLink="/create-client"><button class="btn btn-primary float-right">New Client</button></a>
+<br><br>
+<table class="table table-hover">
   <tr>
     <th>Client ID</th>
     <th *ngFor="let attribute of mainAttributes">{{ attribute.name }}</th>
     <th>Extra</th>
   </tr>
-  <tr *ngFor="let client of clients">
-    <td>{{ client.id }}</td>
-    <td *ngFor="let attribute of mainAttributes">
-      {{ client.mainAttributes.get(attribute.name) }}
-    </td>
-    <td>
-      <div>
-        <table class="table">
-          <tr>
-            <th *ngFor="let attribute of extraAttributes">{{ attribute.name }}</th>
-          </tr>
-          <tr>
-            <td *ngFor="let attribute of extraAttributes">
-              {{ client.extraAttributes.get(attribute.name) }}
-            </td>
+  <ng-container *ngFor="let client of clients"> 
+    <tr (click)="openClientRow(client)">
+      <td>{{ client.id }}</td>
+      <td *ngFor="let attribute of mainAttributes">
+        {{ client.mainAttributes.get(attribute.name) }}
+      </td>
+      <div *ngIf="client.extraAttributes.size == 0">
+        <td>No additional attributes</td>
+      </div> 
+      <div *ngIf="client.extraAttributes.size != 0">
+        <td>Click to expand</td>
+      </div>
+    </tr>
+    <tr *ngIf="client.open"><td colspan="6" class="hiddenRow">
+      <div *ngIf="client.extraAttributes.size != 0" class="card col-sm-4">
+        <table>
+          <tr *ngFor="let attribute of extraAttributes">
+            <th> {{ attribute.name }} </th>
+            <td> {{ client.extraAttributes.get(attribute.name) }} </td>
           </tr> 
         </table>
       </div>
-    </td>
-  </tr>
+    </td></tr>
+  </ng-container>
 </table>

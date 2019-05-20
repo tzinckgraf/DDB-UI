@@ -12,6 +12,7 @@ interface ClientInfo {
   id: string;
   mainAttributes: Map<string, any>;
   extraAttributes: Map<string, any>;
+  open: boolean;
 }
 
 @Component({
@@ -83,8 +84,15 @@ export class ClientListComponent implements OnInit {
     return {
       id: client.id,
       mainAttributes: attributes[0],
-      extraAttributes: attributes[1]
+      extraAttributes: attributes[1],
+      open: false
     } as ClientInfo;
 
+  }
+
+  public openClientRow(client: ClientInfo) {
+    if (client.extraAttributes.size != 0){
+      client.open = !client.open;
+    }
   }
 }
