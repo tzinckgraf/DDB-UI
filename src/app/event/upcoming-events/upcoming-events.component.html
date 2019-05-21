@@ -1,0 +1,11 @@
+<p>
+  upcoming-events works!
+</p>
+
+<table class='table'>
+  <tr *ngFor='let service of services'>
+    <td>{{service.id}}</td>
+    <td>{{service.service.name}}</td>
+    <td>{{service.service.schedule}}</td>
+  </tr>
+</table>
