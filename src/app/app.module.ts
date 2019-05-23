@@ -12,6 +12,7 @@ import { CreateClientComponent } from './client/create-client/create-client.comp
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClientAttributeService } from './service/client-attribute.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'clients' },
@@ -32,7 +33,8 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
-    AccordionModule.forRoot()
+    AccordionModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   providers: [ClientService, ClientAttributeService],
   bootstrap: [AppComponent]

@@ -5,13 +5,41 @@
   <form [formGroup]="clientForm" (ngSubmit)="submitClient(clientForm.value)">
     <div class="form-group row" *ngFor="let attribute of requiredAttributes">
       <label [for]="attribute.id" class="col-sm-2 col-form-label">{{attribute.name}}</label>
-      <div class="col-sm-10">
-        <input type="text"
-              class="form-control"
-              [class.is-invalid]="clientForm.controls[attribute.id].touched && !clientForm.controls[attribute.id].valid"
-              [formControlName]="attribute.id"
-              [id]="attribute.id"
-              placeholder="{{attribute.name}}">
+      <div [ngSwitch]="attribute.datatype" class="col-sm-10">
+        <div *ngSwitchCase="'string'">
+          <input type="text"
+                class="form-control"
+                [class.is-invalid]="clientForm.controls[attribute.id].touched && !clientForm.controls[attribute.id].valid"
+                [formControlName]="attribute.id"
+                [id]="attribute.id"
+                placeholder="{{attribute.name}}">
+        </div>
+        <div *ngSwitchCase="'number'">
+          <input type="number"
+                class="form-control"
+                [class.is-invalid]="clientForm.controls[attribute.id].touched && !clientForm.controls[attribute.id].valid"
+                [formControlName]="attribute.id"
+                [id]="attribute.id"
+                placeholder="{{attribute.name}}">
+        </div>
+        <div *ngSwitchCase="'date'">
+          <div class="row">
+            <div class="col-sm-5">
+              <input type="text"
+                    class="form-control"
+                    bsDatepicker
+                    #dp="bsDatepicker"
+                    [class.is-invalid]="clientForm.controls[attribute.id].touched && !clientForm.controls[attribute.id].valid"
+                    [formControlName]="attribute.id"
+                    [id]="attribute.id"
+                    [bsValue]="bsValue"
+                    placeholder="{{attribute.name}}">
+              </div>
+              <div class="col-sm-3">
+                <button class="btn btn-success" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen">Date Picker</button>
+              </div>
+            </div>
+        </div>
       </div>
       <div class="invalid-feedback d-block row" *ngIf="clientForm.controls[attribute.id].touched && !clientForm.controls[attribute.id].valid">
         <span class="col-sm-5"></span>
@@ -21,17 +49,42 @@
       </div>
     </div>
 
-
     <hr><h5>Optional Fields</h5>
 
     <div class="form-group row" *ngFor="let attribute of notRequiredAttributes">
       <label [for]="attribute.id" class="col-sm-2 col-form-label">{{attribute.name}}</label>
-      <div class="col-sm-10">
-        <input type="text"
-              class="form-control"
-              [formControlName]="attribute.id"
-              [id]="attribute.id"
-              placeholder="{{attribute.name}}">
+      <div [ngSwitch]="attribute.datatype" class="col-sm-10">
+        <div *ngSwitchCase="'string'">
+          <input type="text"
+                class="form-control"
+                [formControlName]="attribute.id"
+                [id]="attribute.id"
+                placeholder="{{attribute.name}}">
+        </div>
+        <div *ngSwitchCase="'number'">
+          <input type="number"
+                class="form-control"
+                [formControlName]="attribute.id"
+                [id]="attribute.id"
+                placeholder="{{attribute.name}}">
+        </div>
+        <div *ngSwitchCase="'date'">
+          <div class="row">
+            <div class="col-sm-5">
+              <input type="text"
+                    class="form-control"
+                    bsDatepicker
+                    #dp="bsDatepicker"
+                    [formControlName]="attribute.id"
+                    [id]="attribute.id"
+                    [bsValue]="bsValue"
+                    placeholder="{{attribute.name}}">
+              </div>
+              <div class="col-sm-3">
+                <button class="btn btn-success" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen">Date Picker</button>
+              </div>
+            </div>
+         </div>
       </div>
     </div>
 
