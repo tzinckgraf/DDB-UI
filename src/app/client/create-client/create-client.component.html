@@ -1,42 +1,95 @@
+<a routerLink="/clients"><button class="btn btn-primary float-right">Client List</button></a>
 <h2>Create Client</h2>
 
 <div class="form-group">
   <form [formGroup]="clientForm" (ngSubmit)="submitClient(clientForm.value)">
-    <div *ngFor="let attribute of requiredAttributes">
-      <div>{{attribute.name}}</div>
-      <div class="{{attribute.id}}">
-        <input type="text"
-              [formControlName]="attribute.id"
-              [id]="attribute.id"
-              placeholder="{{attribute.name}}">
-      </div>
-    </div>
-
-    <div formArrayName="attributes">
-      <div *ngFor="let attribute of attributes.controls; let i = index"
-           [formGroupName]="i">
-        <div>{{attribute.value | json}}</div>
-        <div>{{index}}</div>
-
-        <select name="attributeType" formControlName="attributeId">
-          <option value=""></option>
-          <option *ngFor="let a of notRequiredAttributes"
-                  [ngValue]="a.id">{{a.name}}</option>
-        </select>
-        <div *ngIf="attribute.value.attributeId">
+    <div class="form-group row" *ngFor="let attribute of requiredAttributes">
+      <label [for]="attribute.id" class="col-sm-2 col-form-label">{{attribute.name}}</label>
+      <div [ngSwitch]="attribute.datatype" class="col-sm-10">
+        <div *ngSwitchCase="'string'">
           <input type="text"
-                 placeholder="{{attribute.value.attributeId}}"
-                 formControlName="value">
+                class="form-control"
+                [class.is-invalid]="clientForm.controls[attribute.id].touched && !clientForm.controls[attribute.id].valid"
+                [formControlName]="attribute.id"
+                [id]="attribute.id"
+                placeholder="{{attribute.name}}">
         </div>
-        <button type="button" (click)="removeAttribute(i)">X</button>
-
+        <div *ngSwitchCase="'number'">
+          <input type="number"
+                class="form-control"
+                [class.is-invalid]="clientForm.controls[attribute.id].touched && !clientForm.controls[attribute.id].valid"
+                [formControlName]="attribute.id"
+                [id]="attribute.id"
+                placeholder="{{attribute.name}}">
+        </div>
+        <div *ngSwitchCase="'date'">
+          <div class="row">
+            <div class="col-sm-5">
+              <input type="text"
+                    class="form-control"
+                    bsDatepicker
+                    #dp="bsDatepicker"
+                    [class.is-invalid]="clientForm.controls[attribute.id].touched && !clientForm.controls[attribute.id].valid"
+                    [formControlName]="attribute.id"
+                    [id]="attribute.id"
+                    [bsValue]="bsValue"
+                    placeholder="{{attribute.name}}">
+              </div>
+              <div class="col-sm-3">
+                <button class="btn btn-success" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen">Date Picker</button>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="invalid-feedback d-block row" *ngIf="clientForm.controls[attribute.id].touched && !clientForm.controls[attribute.id].valid">
+        <span class="col-sm-5"></span>
+        <span class="col-sm-7">
+        {{attribute.name}} is a required field.
+        </span>
       </div>
     </div>
-    <button type="button"
-            (click)="addAttributeForm()">
-      Add Attribute
-    </button>
 
-    <button type="submit">Submit</button>
+    <hr><h5>Optional Fields</h5>
+
+    <div class="form-group row" *ngFor="let attribute of notRequiredAttributes">
+      <label [for]="attribute.id" class="col-sm-2 col-form-label">{{attribute.name}}</label>
+      <div [ngSwitch]="attribute.datatype" class="col-sm-10">
+        <div *ngSwitchCase="'string'">
+          <input type="text"
+                class="form-control"
+                [formControlName]="attribute.id"
+                [id]="attribute.id"
+                placeholder="{{attribute.name}}">
+        </div>
+        <div *ngSwitchCase="'number'">
+          <input type="number"
+                class="form-control"
+                [formControlName]="attribute.id"
+                [id]="attribute.id"
+                placeholder="{{attribute.name}}">
+        </div>
+        <div *ngSwitchCase="'date'">
+          <div class="row">
+            <div class="col-sm-5">
+              <input type="text"
+                    class="form-control"
+                    bsDatepicker
+                    #dp="bsDatepicker"
+                    [formControlName]="attribute.id"
+                    [id]="attribute.id"
+                    [bsValue]="bsValue"
+                    placeholder="{{attribute.name}}">
+              </div>
+              <div class="col-sm-3">
+                <button class="btn btn-success" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen">Date Picker</button>
+              </div>
+            </div>
+         </div>
+      </div>
+    </div>
+
+    <button type="submit"
+            class="btn btn-secondary float-right"
+            [disabled]="!clientForm.valid">Submit</button>
   </form>
 </div>
