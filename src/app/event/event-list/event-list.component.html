@@ -1,0 +1,22 @@
+<p>
+  event-list works!
+</p>
+
+<div>
+  <button>Create Event</button>
+  <table class="table table-hover">
+    <tr>
+      <th>Name</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+    </tr>
+    <tr *ngFor="let event of events">
+      <td>{{ event.name }}</td>
+      <td>{{ event.startTime }}</td>
+      <td>{{ event.endTime }}</td>
+      <td><a [routerLink]="['/event-attendance',event.id]">
+        <button>Attendance</button>
+      </a></td>
+    </tr>
+  </table>
+</div>
