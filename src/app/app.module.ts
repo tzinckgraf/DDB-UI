@@ -3,13 +3,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion'
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ClientListComponent } from './client/client-list/client-list.component';
-import { ClientService } from './service/client.service';
-import { HttpClientModule } from '@angular/common/http';
 import { CreateClientComponent } from './client/create-client/create-client.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { UpcomingEventsComponent } from './event/upcoming-events/upcoming-events.component';
+
+import { ClientService } from './service/client.service';
 import { ClientAttributeService } from './service/client-attribute.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -20,6 +22,7 @@ const routes: Routes = [
     { path: 'clients', component: ClientListComponent },
     { path: 'create-client', component: CreateClientComponent }
 ]
+import { EventService } from './service/event.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ const routes: Routes = [
     ClientListComponent,
     CreateClientComponent,
     DashboardComponent
+    UpcomingEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,11 @@ const routes: Routes = [
     AccordionModule.forRoot(),
     BsDatepickerModule.forRoot()
   ],
-  providers: [ClientService, ClientAttributeService],
+  providers: [
+    ClientService,
+    ClientAttributeService,
+    EventService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
